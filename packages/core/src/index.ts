@@ -1,5 +1,5 @@
 export { LocalFlare } from './localflare.js'
-export { parseWranglerConfig, discoverBindings, getBindingSummary } from './config.js'
+export { parseWranglerConfig, discoverBindings, getBindingSummary, findWranglerConfig, WRANGLER_CONFIG_FILES } from './config.js'
 export type {
   LocalFlareOptions,
   WranglerConfig,

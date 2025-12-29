@@ -3,7 +3,7 @@ import { resolve, dirname } from 'node:path'
 import * as esbuild from 'esbuild'
 import { Readable } from 'node:stream'
 import * as readline from 'node:readline'
-import { parseWranglerConfig, discoverBindings, getBindingSummary } from './config.js'
+import { parseWranglerConfig, discoverBindings, getBindingSummary, findWranglerConfig } from './config.js'
 import type { LocalFlareOptions, DiscoveredBindings, WranglerConfig, WorkerLogCallback } from './types.js'
 
 export class LocalFlare {
@@ -13,8 +13,15 @@ export class LocalFlare {
   private options: Required<LocalFlareOptions>
 
   constructor(options: LocalFlareOptions = {}) {
+    // Auto-detect config if not provided
+    let configPath = options.configPath
+    if (!configPath) {
+      const detected = findWranglerConfig(process.cwd())
+      configPath = detected ?? './wrangler.toml' // Fallback for error messaging
+    }
+
     this.options = {
-      configPath: options.configPath ?? './wrangler.toml',
+      configPath,
       port: options.port ?? 8787,
       dashboardPort: options.dashboardPort ?? 8788,
       persistPath: options.persistPath ?? '.localflare',
