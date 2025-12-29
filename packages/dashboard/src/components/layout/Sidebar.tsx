@@ -12,6 +12,7 @@ import {
   ArrowLeft01Icon,
   ArrowRight01Icon,
   Home01Icon,
+  CommandLineIcon,
 } from "@hugeicons/core-free-icons"
 import { bindingsApi } from "@/lib/api"
 import { cn } from "@/lib/utils"
@@ -68,6 +69,17 @@ const navGroups: NavGroup[] = [
         label: "Queues",
         path: "/queues",
         colorClass: "text-queues",
+      },
+    ],
+  },
+  {
+    title: "Monitoring",
+    items: [
+      {
+        icon: CommandLineIcon,
+        label: "Tail Logs",
+        path: "/logs",
+        colorClass: "text-green-500",
       },
     ],
   },

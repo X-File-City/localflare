@@ -10,6 +10,7 @@ import { createR2Routes } from './routes/r2.js'
 import { createQueueRoutes } from './routes/queues.js'
 import { createDurableObjectRoutes } from './routes/do.js'
 import { createBindingsRoutes } from './routes/bindings.js'
+import { createLogsRoutes } from './routes/logs.js'
 
 export interface DashboardServerOptions {
   localflare: LocalFlare
@@ -39,6 +40,7 @@ export function createDashboardApp(localflare: LocalFlare) {
   app.route('/api/r2', createR2Routes(localflare))
   app.route('/api/queues', createQueueRoutes(localflare))
   app.route('/api/do', createDurableObjectRoutes(localflare))
+  app.route('/api/logs', createLogsRoutes(localflare))
 
   return app
 }
@@ -71,3 +73,4 @@ export { createR2Routes } from './routes/r2.js'
 export { createQueueRoutes } from './routes/queues.js'
 export { createDurableObjectRoutes } from './routes/do.js'
 export { createBindingsRoutes } from './routes/bindings.js'
+export { createLogsRoutes, addLog, type LogEntry } from './routes/logs.js'

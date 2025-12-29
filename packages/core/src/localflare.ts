@@ -1,8 +1,10 @@
 import { Miniflare } from 'miniflare'
 import { resolve, dirname } from 'node:path'
 import * as esbuild from 'esbuild'
+import { Readable } from 'node:stream'
+import * as readline from 'node:readline'
 import { parseWranglerConfig, discoverBindings, getBindingSummary } from './config.js'
-import type { LocalFlareOptions, DiscoveredBindings, WranglerConfig } from './types.js'
+import type { LocalFlareOptions, DiscoveredBindings, WranglerConfig, WorkerLogCallback } from './types.js'
 
 export class LocalFlare {
   private mf: Miniflare | null = null
@@ -17,6 +19,7 @@ export class LocalFlare {
       dashboardPort: options.dashboardPort ?? 8788,
       persistPath: options.persistPath ?? '.localflare',
       verbose: options.verbose ?? false,
+      onWorkerLog: options.onWorkerLog ?? (() => {}),
     }
   }
 
@@ -95,6 +98,40 @@ export class LocalFlare {
       this.bindings.durableObjects.map(d => [d.name, d.class_name])
     )
 
+    // Create a handler for worker stdout/stderr to capture logs
+    // Use arrow function to capture 'this' and access current callback
+    const handleRuntimeStdio = (stdout: Readable, stderr: Readable) => {
+      if (this.options.verbose) {
+        console.log('[LocalFlare] Runtime stdio handler connected')
+      }
+
+      const processStream = (stream: Readable, level: 'log' | 'error') => {
+        const rl = readline.createInterface({ input: stream })
+        rl.on('line', (line) => {
+          // Skip empty lines
+          if (!line.trim()) return
+
+          // Determine log level from content
+          let logLevel: 'log' | 'info' | 'warn' | 'error' | 'debug' = level === 'error' ? 'error' : 'log'
+          if (line.includes('[warn]') || line.includes('WARNING')) {
+            logLevel = 'warn'
+          } else if (line.includes('[info]') || line.includes('INFO')) {
+            logLevel = 'info'
+          } else if (line.includes('[debug]') || line.includes('DEBUG')) {
+            logLevel = 'debug'
+          } else if (line.includes('[error]') || line.includes('ERROR')) {
+            logLevel = 'error'
+          }
+
+          // Access callback via this.options to allow setting it after start()
+          this.options.onWorkerLog({ level: logLevel, message: line })
+        })
+      }
+
+      processStream(stdout, 'log')
+      processStream(stderr, 'error')
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const miniflareOptions: any = {
       modules: [
@@ -113,6 +150,10 @@ export class LocalFlare {
       cachePersist: `${persistRoot}/cache`,
       // Explicit binding configurations
       bindings: this.bindings.vars,
+      // Capture worker stdout/stderr for logging
+      handleRuntimeStdio,
+      // Use plain text logs instead of structured JSON for easier parsing
+      structuredWorkerdLogs: false,
     }
 
     // Only add bindings if they exist
@@ -205,6 +246,11 @@ export class LocalFlare {
 
   isRunning(): boolean {
     return this.mf !== null
+  }
+
+  // Set the worker log callback (must be called before start())
+  setLogCallback(callback: WorkerLogCallback): void {
+    this.options.onWorkerLog = callback
   }
 
   private ensureRunning(): void {

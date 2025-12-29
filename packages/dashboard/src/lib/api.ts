@@ -220,3 +220,19 @@ export interface DurableObject {
   class_name: string
   script_name?: string
 }
+
+// Logs
+export interface LogEntry {
+  id: string
+  timestamp: string
+  level: 'log' | 'info' | 'warn' | 'error' | 'debug'
+  source: 'worker' | 'queue' | 'do' | 'system'
+  message: string
+  data?: unknown
+}
+
+export const logsApi = {
+  getRecent: (limit = 100) => fetchApi<{ logs: LogEntry[] }>(`/logs?limit=${limit}`),
+  clear: () => fetchApi<{ success: boolean }>('/logs', { method: 'DELETE' }),
+  // SSE stream is handled separately via EventSource
+}

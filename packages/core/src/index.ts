@@ -11,4 +11,6 @@ export type {
   DurableObjectBinding,
   QueueProducerConfig,
   QueueConsumerConfig,
+  WorkerLogEntry,
+  WorkerLogCallback,
 } from './types.js'

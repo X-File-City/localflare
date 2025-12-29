@@ -70,12 +70,20 @@ export interface DiscoveredBindings {
   vars: Record<string, string>
 }
 
+export interface WorkerLogEntry {
+  level: 'log' | 'info' | 'warn' | 'error' | 'debug'
+  message: string
+}
+
+export type WorkerLogCallback = (entry: WorkerLogEntry) => void
+
 export interface LocalFlareOptions {
   configPath?: string
   port?: number
   dashboardPort?: number
   persistPath?: string
   verbose?: boolean
+  onWorkerLog?: WorkerLogCallback
 }
 
 export interface BindingInfo {
