@@ -274,6 +274,13 @@ npx localflare
       <Callout type="tip">
         Localflare automatically detects all bindings from your <Code>wrangler.toml</Code> file.
       </Callout>
+
+      <H2>Existing Projects</H2>
+      <P>
+        If you have an existing project with data from <Code>wrangler dev</Code>, use the <Code>--persist</Code> flag
+        to preserve your data:
+      </P>
+      <CodeBlock title="Terminal">{`npx localflare --persist .wrangler/state/v3`}</CodeBlock>
     </Section>
   );
 }
@@ -306,6 +313,18 @@ localflare -p 3000 -d 3001`}</CodeBlock>
       <P>By default, Localflare persists data to <Code>.localflare/</Code> in your project directory.</P>
       <CodeBlock title="Terminal">{`# Custom persistence directory
 localflare --persist ./my-data`}</CodeBlock>
+
+      <H3>Existing Projects</H3>
+      <P>
+        If you have an existing project using <Code>wrangler dev</Code>, use the <Code>--persist</Code> flag
+        to point to your existing Wrangler data:
+      </P>
+      <CodeBlock title="Terminal">{`# Use existing Wrangler data
+localflare --persist .wrangler/state/v3`}</CodeBlock>
+      <Callout type="info">
+        Both Localflare and Wrangler use Miniflare under the hood, so storage formats are compatible.
+        Your existing KV, D1, R2, and Durable Object data will work seamlessly.
+      </Callout>
     </Section>
   );
 }

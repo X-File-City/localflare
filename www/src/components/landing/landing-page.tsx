@@ -96,6 +96,37 @@ export function LandingPage() {
               </Link>
             </div>
           </div>
+
+          {/* Dashboard Preview */}
+          <div className="mt-16">
+            <div className="relative mx-auto max-w-5xl">
+              {/* Browser frame */}
+              <div className="rounded-xl border border-zinc-200 bg-white shadow-2xl shadow-zinc-900/10 overflow-hidden">
+                {/* Browser header */}
+                <div className="flex items-center gap-2 border-b border-zinc-100 bg-zinc-50 px-4 py-3">
+                  <div className="flex items-center gap-1.5">
+                    <div className="size-3 rounded-full bg-zinc-300" />
+                    <div className="size-3 rounded-full bg-zinc-300" />
+                    <div className="size-3 rounded-full bg-zinc-300" />
+                  </div>
+                  <div className="flex-1 flex justify-center">
+                    <div className="flex items-center gap-2 rounded-md bg-white border border-zinc-200 px-3 py-1 text-xs text-zinc-500">
+                      <span>localhost:8788</span>
+                    </div>
+                  </div>
+                  <div className="w-[52px]" />
+                </div>
+                {/* Screenshot */}
+                <img
+                  src="/dashboard.png"
+                  alt="Localflare Dashboard"
+                  className="w-full"
+                />
+              </div>
+              {/* Subtle glow effect */}
+              <div className="absolute -inset-4 -z-10 rounded-2xl bg-gradient-to-b from-orange-100/50 to-transparent blur-2xl" />
+            </div>
+          </div>
         </div>
       </section>
 
