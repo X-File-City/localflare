@@ -54,7 +54,7 @@ app.use('/api/*', cors())
 // Health check
 app.get('/api', (c) => {
   return c.json({
-    name: 'LocalFlare Playground',
+    name: 'Localflare Playground',
     environment: c.env.ENVIRONMENT,
     apiVersion: c.env.API_VERSION,
     endpoints: {

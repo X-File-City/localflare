@@ -1,13 +1,13 @@
 # localflare-core
 
-Core Miniflare wrapper and configuration parser for [LocalFlare](https://www.npmjs.com/package/localflare).
+Core Miniflare wrapper and configuration parser for [Localflare](https://www.npmjs.com/package/localflare).
 
 [![npm version](https://img.shields.io/npm/v/localflare-core.svg)](https://www.npmjs.com/package/localflare-core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Overview
 
-This package provides the core functionality for LocalFlare:
+This package provides the core functionality for Localflare:
 
 - **Miniflare Integration** - Wraps Miniflare to provide a consistent API for running Cloudflare Workers locally
 - **Config Parser** - Reads and parses `wrangler.toml` configuration files

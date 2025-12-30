@@ -136,7 +136,7 @@ export function Sidebar() {
             </svg>
             <div className="min-w-0">
               <span className="text-sm font-semibold text-sidebar-foreground">
-                LocalFlare
+                Localflare
               </span>
               {bindings?.name && (
                 <p className="text-xs text-muted-foreground truncate">
@@ -258,7 +258,7 @@ export function Sidebar() {
         </NavLink>
         {!isCollapsed && (
           <p className="mt-2 px-2.5 text-[10px] text-muted-foreground">
-            LocalFlare v0.0.1
+            Localflare v0.1.2
           </p>
         )}
       </div>

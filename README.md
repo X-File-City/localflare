@@ -1,4 +1,4 @@
-# LocalFlare
+# Localflare
 
 Local development dashboard for Cloudflare Workers. Visualize and interact with your D1 databases, KV namespaces, R2 buckets, Durable Objects, and Queues - all locally.
 
@@ -63,11 +63,11 @@ localflare ./custom/wrangler.toml
 
 ## Architecture
 
-LocalFlare uses [Miniflare](https://miniflare.dev) under the hood to run your Worker locally. This ensures 100% compatibility with the Cloudflare runtime.
+Localflare uses [Miniflare](https://miniflare.dev) under the hood to run your Worker locally. This ensures 100% compatibility with the Cloudflare runtime.
 
 ```
 ┌────────────────────────────────────────────────────┐
-│              LocalFlare (single process)           │
+│              Localflare (single process)           │
 │                                                    │
 │  ┌──────────────────────────────────────────────┐  │
 │  │              Miniflare Runtime                │  │
@@ -82,10 +82,10 @@ LocalFlare uses [Miniflare](https://miniflare.dev) under the hood to run your Wo
 │                        │                           │
 │  ┌─────────────────────┴─────────────────────┐     │
 │  │                                           │     │
-│  │  ┌─────────────┐      ┌─────────────┐     │     │
-│  │  │ Your Worker │      │  Dashboard  │     │     │
-│  │  │   :8787     │      │    :8788    │     │     │
-│  │  └─────────────┘      └─────────────┘     │     │
+│  │  ┌─────────────────┐  ┌─────────────┐     │     │
+│  │  │   Your Worker   │  │  Dashboard  │     │     │
+│  │  │     :8787       │  │    :8788    │     │     │
+│  │  └─────────────────┘  └─────────────┘     │     │
 │  │                                           │     │
 │  └───────────────────────────────────────────┘     │
 └────────────────────────────────────────────────────┘
@@ -132,6 +132,27 @@ pnpm dev
 | Hyperdrive | ✅ Full | Connection status |
 | Vectorize | ⚠️ Limited | Basic operations |
 | Workers AI | ⚠️ Mock | Mock responses |
+
+## Sponsorship
+
+If you find Localflare useful, please consider supporting its development:
+
+[![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-pink)](https://github.com/sponsors/rohanprasadofficial)
+
+Your sponsorship helps with:
+- Continued development and maintenance
+- New features and binding support
+- Documentation improvements
+- Community support
+
+**[Become a Sponsor](https://github.com/sponsors/rohanprasadofficial)**
+
+## Links
+
+- [Documentation](https://localflare.dev/docs)
+- [GitHub](https://github.com/rohanprasadofficial/localflare)
+- [npm](https://www.npmjs.com/package/localflare)
+- [Twitter](https://x.com/rohanpdofficial)
 
 ## License
 

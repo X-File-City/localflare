@@ -1,13 +1,13 @@
 # localflare-server
 
-Dashboard API server for [LocalFlare](https://www.npmjs.com/package/localflare). Provides a Hono-based REST API for interacting with Cloudflare Worker bindings.
+Dashboard API server for [Localflare](https://www.npmjs.com/package/localflare). Provides a Hono-based REST API for interacting with Cloudflare Worker bindings.
 
 [![npm version](https://img.shields.io/npm/v/localflare-server.svg)](https://www.npmjs.com/package/localflare-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Overview
 
-This package provides the API server that powers the LocalFlare dashboard:
+This package provides the API server that powers the Localflare dashboard:
 
 - **REST API** - Full CRUD operations for all Cloudflare bindings
 - **Hono Framework** - Fast, lightweight HTTP server

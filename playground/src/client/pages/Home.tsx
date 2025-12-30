@@ -117,7 +117,7 @@ export default function Home() {
       <div className="p-6 border-b border-border">
         <PageHeader
           title="Overview"
-          description="LocalFlare Playground - Test and explore Cloudflare Workers bindings locally"
+          description="Localflare Playground - Test and explore Cloudflare Workers bindings locally"
         />
 
         {/* Stats */}
@@ -212,7 +212,7 @@ export default function Home() {
           <div className="px-4 py-3 bg-muted/50 border-b border-border">
             <h3 className="text-sm font-semibold">Quick Start</h3>
             <p className="text-xs text-muted-foreground mt-0.5">
-              This playground demonstrates all LocalFlare-supported Cloudflare bindings
+              This playground demonstrates all Localflare-supported Cloudflare bindings
             </p>
           </div>
           <div className="p-4 space-y-3 text-sm text-muted-foreground">

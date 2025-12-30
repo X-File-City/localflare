@@ -1,4 +1,4 @@
-# LocalFlare
+# Localflare
 
 Local development dashboard for Cloudflare Workers. Visualize and interact with your D1 databases, KV namespaces, R2 buckets, Durable Objects, and Queues - all locally.
 
@@ -66,11 +66,11 @@ localflare ./custom/wrangler.toml
 
 ## Architecture
 
-LocalFlare uses [Miniflare](https://miniflare.dev) under the hood to run your Worker locally. This ensures 100% compatibility with the Cloudflare runtime.
+Localflare uses [Miniflare](https://miniflare.dev) under the hood to run your Worker locally. This ensures 100% compatibility with the Cloudflare runtime.
 
 ```
 ┌────────────────────────────────────────────────────┐
-│              LocalFlare (single process)           │
+│              Localflare (single process)           │
 │                                                    │
 │  ┌──────────────────────────────────────────────┐  │
 │  │              Miniflare Runtime                │  │

@@ -1,7 +1,7 @@
 {
   "name": "localflare-core",
-  "version": "0.1.1",
-  "description": "Core Miniflare wrapper for LocalFlare",
+  "version": "0.1.2",
+  "description": "Core Miniflare wrapper for Localflare",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

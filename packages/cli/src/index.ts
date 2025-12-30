@@ -27,7 +27,7 @@ cli
   .option('-v, --verbose', 'Verbose output')
   .action(async (configPath: string | undefined, options) => {
     console.log('')
-    console.log(pc.bold(pc.cyan('  ⚡ LocalFlare')))
+    console.log(pc.bold(pc.cyan('  ⚡ Localflare')))
     console.log(pc.dim('  Local Cloudflare Development Dashboard'))
     console.log('')
 
@@ -80,7 +80,7 @@ cli
       })
 
       console.log('')
-      console.log(pc.green('  ✓ LocalFlare is running!'))
+      console.log(pc.green('  ✓ Localflare is running!'))
       console.log('')
       console.log(`  ${pc.dim('Worker:')}     ${pc.cyan(`http://localhost:${options.port}`)}`)
       console.log(`  ${pc.dim('Dashboard:')}  ${pc.cyan(`http://localhost:${options.dashboardPort}`)}`)
@@ -100,7 +100,7 @@ cli
       process.on('SIGTERM', shutdown)
 
     } catch (error) {
-      console.log(pc.red(`  ✗ Failed to start LocalFlare`))
+      console.log(pc.red(`  ✗ Failed to start Localflare`))
       console.log(pc.dim(`    ${error}`))
       console.log('')
       process.exit(1)

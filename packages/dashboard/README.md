@@ -1,13 +1,13 @@
 # localflare-dashboard
 
-React dashboard UI for [LocalFlare](https://www.npmjs.com/package/localflare). A modern, feature-rich interface for managing Cloudflare Worker bindings locally.
+React dashboard UI for [Localflare](https://www.npmjs.com/package/localflare). A modern, feature-rich interface for managing Cloudflare Worker bindings locally.
 
 [![npm version](https://img.shields.io/npm/v/localflare-dashboard.svg)](https://www.npmjs.com/package/localflare-dashboard)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Overview
 
-This package provides the web-based dashboard UI for LocalFlare:
+This package provides the web-based dashboard UI for Localflare:
 
 - **Modern React** - Built with React 19 and TypeScript
 - **Beautiful UI** - Tailwind CSS 4 with Radix UI components

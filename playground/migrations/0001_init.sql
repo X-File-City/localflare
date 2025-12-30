@@ -40,12 +40,12 @@ INSERT INTO users (email, name, role) VALUES
   ('diana@example.com', 'Diana Prince', 'moderator');
 
 INSERT INTO posts (user_id, title, content, published) VALUES
-  (1, 'Welcome to LocalFlare', 'This is a sample post to demonstrate the D1 database explorer.', 1),
-  (1, 'Getting Started Guide', 'Learn how to use LocalFlare for local Cloudflare development.', 1),
+  (1, 'Welcome to Localflare', 'This is a sample post to demonstrate the D1 database explorer.', 1),
+  (1, 'Getting Started Guide', 'Learn how to use Localflare for local Cloudflare development.', 1),
   (2, 'My First Post', 'Hello world! This is my first post on the platform.', 1),
   (3, 'Draft Post', 'This is a draft that has not been published yet.', 0);
 
 INSERT INTO comments (post_id, user_id, content) VALUES
-  (1, 2, 'Great introduction! Looking forward to using LocalFlare.'),
+  (1, 2, 'Great introduction! Looking forward to using Localflare.'),
   (1, 3, 'This is exactly what I needed for local development.'),
   (2, 4, 'Very helpful guide, thanks for sharing!');

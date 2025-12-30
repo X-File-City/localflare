@@ -98,7 +98,7 @@ export function Home() {
               Connection Error
             </CardTitle>
             <CardDescription>
-              Could not connect to LocalFlare server. Make sure it's running.
+              Could not connect to Localflare server. Make sure it's running.
             </CardDescription>
           </CardHeader>
           <CardContent>

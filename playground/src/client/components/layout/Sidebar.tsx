@@ -132,7 +132,7 @@ export default function Sidebar() {
             </svg>
             <div className="min-w-0">
               <span className="text-sm font-semibold text-sidebar-foreground">
-                LocalFlare
+                Localflare
               </span>
               <p className="text-xs text-muted-foreground truncate">
                 Playground
@@ -237,7 +237,7 @@ export default function Sidebar() {
       <div className="p-2 border-t border-sidebar-border">
         {!isCollapsed && (
           <p className="px-2.5 text-[10px] text-muted-foreground">
-            LocalFlare Playground v0.0.1
+            Localflare Playground v0.1.2
           </p>
         )}
       </div>
