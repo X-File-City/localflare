@@ -1,6 +1,6 @@
 {
   "name": "localflare-api",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "API worker for Localflare dashboard - runs alongside your worker with shared bindings",
   "type": "module",
   "main": "./dist/worker/index.js",
