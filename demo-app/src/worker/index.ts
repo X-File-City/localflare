@@ -8,6 +8,8 @@ interface Env {
   CACHE: KVNamespace
   SESSIONS: KVNamespace
   STORAGE: R2Bucket
+  UPLOADS: R2Bucket
+  BACKUPS: R2Bucket
   TASKS: Queue
   COUNTER: DurableObjectNamespace
   ENVIRONMENT: string
@@ -61,7 +63,9 @@ app.get('/api', (c) => {
       users: '/api/users',
       posts: '/api/posts',
       kv: '/api/kv',
-      r2: '/api/files',
+      r2Storage: '/api/files',
+      r2Uploads: '/api/uploads',
+      r2Backups: '/api/backups',
       queue: '/api/queue',
       counter: '/api/counter/:name',
     },
@@ -205,6 +209,110 @@ app.get('/api/files/:key', async (c) => {
 app.delete('/api/files/:key', async (c) => {
   const key = c.req.param('key')
   await c.env.STORAGE.delete(key)
+  return c.json({ success: true })
+})
+
+// ============ R2 Uploads Bucket Routes ============
+
+// List uploads
+app.get('/api/uploads', async (c) => {
+  const prefix = c.req.query('prefix') || undefined
+  const list = await c.env.UPLOADS.list({ prefix })
+
+  return c.json({
+    objects: list.objects.map((obj) => ({
+      key: obj.key,
+      size: obj.size,
+      uploaded: obj.uploaded,
+    })),
+  })
+})
+
+// Upload to uploads bucket
+app.put('/api/uploads/:key', async (c) => {
+  const key = c.req.param('key')
+  const body = await c.req.arrayBuffer()
+  const contentType = c.req.header('Content-Type') ?? 'application/octet-stream'
+
+  await c.env.UPLOADS.put(key, body, {
+    httpMetadata: { contentType },
+  })
+
+  return c.json({ success: true, key })
+})
+
+// Download from uploads bucket
+app.get('/api/uploads/:key', async (c) => {
+  const key = c.req.param('key')
+  const object = await c.env.UPLOADS.get(key)
+
+  if (!object) {
+    return c.json({ error: 'File not found' }, 404)
+  }
+
+  return new Response(object.body, {
+    headers: {
+      'Content-Type': object.httpMetadata?.contentType ?? 'application/octet-stream',
+    },
+  })
+})
+
+// Delete from uploads bucket
+app.delete('/api/uploads/:key', async (c) => {
+  const key = c.req.param('key')
+  await c.env.UPLOADS.delete(key)
+  return c.json({ success: true })
+})
+
+// ============ R2 Backups Bucket Routes ============
+
+// List backups
+app.get('/api/backups', async (c) => {
+  const prefix = c.req.query('prefix') || undefined
+  const list = await c.env.BACKUPS.list({ prefix })
+
+  return c.json({
+    objects: list.objects.map((obj) => ({
+      key: obj.key,
+      size: obj.size,
+      uploaded: obj.uploaded,
+    })),
+  })
+})
+
+// Upload to backups bucket
+app.put('/api/backups/:key', async (c) => {
+  const key = c.req.param('key')
+  const body = await c.req.arrayBuffer()
+  const contentType = c.req.header('Content-Type') ?? 'application/octet-stream'
+
+  await c.env.BACKUPS.put(key, body, {
+    httpMetadata: { contentType },
+  })
+
+  return c.json({ success: true, key })
+})
+
+// Download from backups bucket
+app.get('/api/backups/:key', async (c) => {
+  const key = c.req.param('key')
+  const object = await c.env.BACKUPS.get(key)
+
+  if (!object) {
+    return c.json({ error: 'File not found' }, 404)
+  }
+
+  return new Response(object.body, {
+    headers: {
+      'Content-Type': object.httpMetadata?.contentType ?? 'application/octet-stream',
+    },
+  })
+})
+
+// Delete from backups bucket
+app.delete('/api/backups/:key', async (c) => {
+  const key = c.req.param('key')
+  await c.env.BACKUPS.delete(key)
   return c.json({ success: true })
 })
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
@@ -6,6 +6,7 @@ import {
   File01Icon,
   Delete02Icon,
   Download01Icon,
+  Upload04Icon,
   Image01Icon,
   Video01Icon,
   FileAttachmentIcon,
@@ -202,6 +203,7 @@ export function R2Explorer() {
   const [selectedBucket, setSelectedBucket] = useState<string | null>(null)
   const [selectedObject, setSelectedObject] = useState<string | null>(null)
   const [searchPrefix, setSearchPrefix] = useState("")
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const queryClient = useQueryClient()
 
@@ -238,6 +240,28 @@ export function R2Explorer() {
       setSelectedObject(null)
     },
   })
+
+  const uploadMutation = useMutation({
+    mutationFn: async (file: File) => {
+      if (!selectedBucket) throw new Error("No bucket selected")
+      return r2Api.uploadObject(selectedBucket, file.name, file)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["r2-objects", selectedBucket] })
+    },
+  })
+
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files || files.length === 0) return
+
+    for (const file of Array.from(files)) {
+      uploadMutation.mutate(file)
+    }
+
+    // Reset input so same file can be uploaded again
+    e.target.value = ''
+  }
 
   const handleDownload = () => {
     if (selectedBucket && selectedObject) {
@@ -284,12 +308,30 @@ export function R2Explorer() {
     <div className="h-full flex flex-col">
       {/* Header */}
       <div className="p-6 border-b border-border">
-        <PageHeader
-          icon={Folder01Icon}
-          iconColor="text-r2"
-          title="R2 Buckets"
-          description="Manage your R2 object storage"
-        />
+        <div className="flex items-start justify-between">
+          <PageHeader
+            icon={Folder01Icon}
+            iconColor="text-r2"
+            title="R2 Buckets"
+            description="Manage your R2 object storage"
+          />
+          {selectedBucket && (
+            <Button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploadMutation.isPending}
+            >
+              <HugeiconsIcon icon={Upload04Icon} className="size-4 mr-2" strokeWidth={2} />
+              {uploadMutation.isPending ? 'Uploading...' : `Upload to ${selectedBucket}`}
+            </Button>
+          )}
+          <input
+            ref={fileInputRef}
+            type="file"
+            multiple
+            className="hidden"
+            onChange={handleUpload}
+          />
+        </div>
 
         {/* Stats */}
         <StatsCardGroup className="mt-6">
@@ -401,10 +443,21 @@ export function R2Explorer() {
                     })}
                   </div>
                 ) : (
-                  <div className="p-4 text-center">
+                  <div className="p-4 text-center space-y-3">
                     <p className="text-sm text-muted-foreground">
                       {searchPrefix ? "No objects match your search" : "This bucket is empty"}
                     </p>
+                    {!searchPrefix && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={uploadMutation.isPending}
+                      >
+                        <HugeiconsIcon icon={Upload04Icon} className="size-4 mr-1.5" strokeWidth={2} />
+                        Upload files
+                      </Button>
+                    )}
                   </div>
                 )}
               </ScrollArea>
@@ -519,3 +572,4 @@ export function R2Explorer() {
     </div>
   )
 }
+

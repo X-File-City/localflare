@@ -19,10 +19,18 @@ id = "playground-cache"
 binding = "SESSIONS"
 id = "playground-sessions"
 
-# R2 Bucket
+# R2 Buckets
 [[r2_buckets]]
 binding = "STORAGE"
 bucket_name = "playground-storage"
+
+[[r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "playground-uploads"
+
+[[r2_buckets]]
+binding = "BACKUPS"
+bucket_name = "playground-backups"
 
 # Queue Producer
 [[queues.producers]]

@@ -15,33 +15,36 @@ import { StatsCard, StatsCardGroup } from "@/components/ui/stats-card"
 import { SearchInput } from "@/components/ui/search-input"
 import { DataTable, DataTableLoading, type Column } from "@/components/ui/data-table"
 import { EmptyState } from "@/components/ui/empty-state"
-import { r2Api, type R2Object } from "@/lib/api"
+import { r2Api, R2_BUCKETS, type R2Object, type R2BucketName } from "@/lib/api"
 import { formatBytes, formatDate } from "@/lib/utils"
 
 export default function R2Explorer() {
   const queryClient = useQueryClient()
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [selectedBucket, setSelectedBucket] = useState<R2BucketName>('files')
   const [prefix, setPrefix] = useState("")
   const [selectedFile, setSelectedFile] = useState<R2Object | null>(null)
 
+  const currentBucket = R2_BUCKETS.find(b => b.id === selectedBucket)!
+
   const { data: files, isLoading } = useQuery({
-    queryKey: ["files", prefix],
-    queryFn: () => r2Api.listFiles(prefix || undefined),
+    queryKey: ["files", selectedBucket, prefix],
+    queryFn: () => r2Api.listFiles(selectedBucket, prefix || undefined),
   })
 
   const uploadMutation = useMutation({
     mutationFn: async (file: File) => {
-      return r2Api.uploadFile(file.name, file)
+      return r2Api.uploadFile(selectedBucket, file.name, file)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["files"] })
+      queryClient.invalidateQueries({ queryKey: ["files", selectedBucket] })
     },
   })
 
   const deleteMutation = useMutation({
-    mutationFn: r2Api.deleteFile,
+    mutationFn: (key: string) => r2Api.deleteFile(selectedBucket, key),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["files"] })
+      queryClient.invalidateQueries({ queryKey: ["files", selectedBucket] })
       setSelectedFile(null)
     },
   })
@@ -54,7 +57,13 @@ export default function R2Explorer() {
   }
 
   const handleDownload = (key: string) => {
-    window.open(r2Api.downloadFile(key), "_blank")
+    window.open(r2Api.downloadFile(selectedBucket, key), "_blank")
+  }
+
+  const handleBucketChange = (bucket: R2BucketName) => {
+    setSelectedBucket(bucket)
+    setSelectedFile(null)
+    setPrefix("")
   }
 
   const fileColumns: Column<R2Object>[] = [
@@ -125,6 +134,34 @@ export default function R2Explorer() {
           }
         />
 
+        {/* Bucket Selector */}
+        <div className="mt-4">
+          <label className="text-xs font-medium text-muted-foreground uppercase mb-2 block">
+            Select Bucket
+          </label>
+          <div className="flex gap-2">
+            {R2_BUCKETS.map((bucket) => (
+              <button
+                key={bucket.id}
+                onClick={() => handleBucketChange(bucket.id)}
+                className={`px-4 py-2 rounded-lg border text-sm font-medium transition-colors ${
+                  selectedBucket === bucket.id
+                    ? "bg-primary text-primary-foreground border-primary"
+                    : "bg-background border-border hover:bg-muted text-foreground"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <HugeiconsIcon icon={Folder01Icon} className="size-4" strokeWidth={2} />
+                  {bucket.name}
+                </div>
+              </button>
+            ))}
+          </div>
+          <p className="text-xs text-muted-foreground mt-1">
+            {currentBucket.description}
+          </p>
+        </div>
+
         {/* Stats */}
         <StatsCardGroup className="mt-6">
           <StatsCard
@@ -132,6 +169,7 @@ export default function R2Explorer() {
             iconColor="text-r2"
             label="Objects"
             value={files?.objects?.length ?? 0}
+            description={`in ${currentBucket.name}`}
           />
           <StatsCard
             icon={Folder01Icon}
@@ -195,7 +233,7 @@ export default function R2Explorer() {
               <EmptyState
                 icon={File01Icon}
                 title="No files found"
-                description={prefix ? "No files match your filter" : "Upload a file to get started"}
+                description={prefix ? "No files match your filter" : `Upload a file to ${currentBucket.name}`}
                 action={{
                   label: "Upload File",
                   onClick: () => fileInputRef.current?.click(),
@@ -210,6 +248,7 @@ export default function R2Explorer() {
           <div className="w-80 border-l border-border flex flex-col bg-muted/30">
             <div className="p-4 border-b border-border">
               <h3 className="text-sm font-semibold">File Details</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">in {currentBucket.name}</p>
             </div>
             <ScrollArea className="flex-1">
               <div className="p-4 space-y-4">

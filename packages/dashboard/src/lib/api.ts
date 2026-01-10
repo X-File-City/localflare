@@ -154,6 +154,20 @@ export const r2Api = {
     fetchApi<{ success: boolean }>(`/r2/${binding}/objects/${encodeURIComponent(key)}`, {
       method: 'DELETE',
     }),
+  uploadObject: async (binding: string, key: string, file: File) => {
+    const response = await fetch(`${API_BASE}/r2/${binding}/objects/${encodeURIComponent(key)}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': file.type || 'application/octet-stream',
+      },
+      body: file,
+    })
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ error: 'Upload failed' }))
+      throw new Error(error.error || `HTTP ${response.status}`)
+    }
+    return response.json() as Promise<{ success: boolean; key: string; size: number; etag: string }>
+  },
 }
 
 // Queues

@@ -78,12 +78,21 @@ export const kvApi = {
     }),
 }
 
+// R2 Bucket types
+export type R2BucketName = 'files' | 'uploads' | 'backups'
+
+export const R2_BUCKETS: { id: R2BucketName; name: string; description: string }[] = [
+  { id: 'files', name: 'STORAGE', description: 'Main file storage' },
+  { id: 'uploads', name: 'UPLOADS', description: 'User uploads' },
+  { id: 'backups', name: 'BACKUPS', description: 'Backup storage' },
+]
+
 // R2 API
 export const r2Api = {
-  listFiles: (prefix?: string) =>
-    fetchApi<{ objects: R2Object[] }>(`/files${prefix ? `?prefix=${prefix}` : ''}`),
-  uploadFile: async (key: string, file: File) => {
-    const response = await fetch(`${API_BASE}/files/${encodeURIComponent(key)}`, {
+  listFiles: (bucket: R2BucketName = 'files', prefix?: string) =>
+    fetchApi<{ objects: R2Object[] }>(`/${bucket}${prefix ? `?prefix=${prefix}` : ''}`),
+  uploadFile: async (bucket: R2BucketName = 'files', key: string, file: File) => {
+    const response = await fetch(`${API_BASE}/${bucket}/${encodeURIComponent(key)}`, {
       method: 'PUT',
       headers: { 'Content-Type': file.type || 'application/octet-stream' },
       body: file,
@@ -91,9 +100,9 @@ export const r2Api = {
     if (!response.ok) throw new Error(`Upload failed: ${response.status}`)
     return response.json() as Promise<{ success: boolean; key: string }>
   },
-  downloadFile: (key: string) => `${API_BASE}/files/${encodeURIComponent(key)}`,
-  deleteFile: (key: string) =>
-    fetchApi<{ success: boolean }>(`/files/${encodeURIComponent(key)}`, {
+  downloadFile: (bucket: R2BucketName = 'files', key: string) => `${API_BASE}/${bucket}/${encodeURIComponent(key)}`,
+  deleteFile: (bucket: R2BucketName = 'files', key: string) =>
+    fetchApi<{ success: boolean }>(`/${bucket}/${encodeURIComponent(key)}`, {
       method: 'DELETE',
     }),
 }
