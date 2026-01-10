@@ -12,5 +12,8 @@
       "pattern": "studio.localflare.dev",
       "custom_domain": true
     }
-  ]
+  ],
+  "observability": {
+    "enabled": true
+  }
 }
