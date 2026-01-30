@@ -1073,6 +1073,7 @@ function CLIOptionsSection() {
           ['--no-open', '', 'Don\'t open browser', 'false'],
           ['--no-tui', '', 'Disable TUI output', 'false'],
           ['--dev', '', 'Use local dashboard', 'false'],
+          ['--persist-to', '', 'Custom persistence directory', '.wrangler/state'],
           ['-h, --help', '-h', 'Display help', ''],
           ['--version', '', 'Display version', ''],
         ]}
@@ -1305,7 +1306,7 @@ function PersistenceSection() {
       </P>
 
       <H2>Storage Location</H2>
-      <P>Data is stored in <Code>.wrangler/state/</Code> in your project directory:</P>
+      <P>Data is stored in <Code>.wrangler/state/</Code> in your project directory by default:</P>
       <CodeBlock>{`.wrangler/
 └── state/
     └── v3/
@@ -1313,6 +1314,16 @@ function PersistenceSection() {
         ├── kv/           # KV namespace data
         ├── r2/           # R2 bucket objects
         └── do/           # Durable Object state`}</CodeBlock>
+
+      <H2>Custom Persistence Directory</H2>
+      <P>Use the <Code>--persist-to</Code> option to specify a custom directory:</P>
+      <CodeBlock title="Terminal">{`# Use relative path
+localflare --persist-to ./my-data
+
+# Use absolute path
+localflare --persist-to /tmp/localflare-data
+`}
+</CodeBlock>
 
       <H2>Sharing Data with wrangler dev</H2>
       <P>
