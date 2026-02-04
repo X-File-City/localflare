@@ -1,0 +1,213 @@
+{
+  "id": "localflare-onboarding",
+  "title": "Localflare Project Onboarding",
+  "description": "Welcome to Localflare! Learn the monorepo structure and key components for contributing to this Cloudflare Workers development dashboard.",
+  "version": "1.0.0",
+  "audience": "New Contributors",
+  "prerequisites": [
+    "Familiarity with Node.js and TypeScript",
+    "Basic understanding of Cloudflare Workers"
+  ],
+  "steps": [
+    {
+      "id": "step-1-overview",
+      "title": "Project Overview",
+      "description": "Localflare is a local development dashboard for Cloudflare Workers. It's organized as a monorepo with multiple packages that work together to provide D1 database studio, KV browser, R2 file manager, and more.",
+      "estimatedTime": 60,
+      "colorMode": "fileTypes",
+      "interactiveActions": [
+        {
+          "type": "explore",
+          "description": "Explore the monorepo structure",
+          "target": "packages"
+        }
+      ]
+    },
+    {
+      "id": "step-2-packages",
+      "title": "Package Architecture",
+      "description": "The project is split into focused packages. Each package has a specific role in the Localflare ecosystem.",
+      "estimatedTime": 120,
+      "focusDirectory": "packages",
+      "highlightLayers": [
+        {
+          "id": "core-packages",
+          "name": "Core Packages",
+          "color": "#3b82f6",
+          "items": [
+            {
+              "path": "packages/cli",
+              "type": "directory"
+            },
+            {
+              "path": "packages/api",
+              "type": "directory"
+            },
+            {
+              "path": "packages/core",
+              "type": "directory"
+            }
+          ],
+          "opacity": 0.7,
+          "borderWidth": 2
+        },
+        {
+          "id": "dashboard-package",
+          "name": "Dashboard UI",
+          "color": "#10b981",
+          "items": [
+            {
+              "path": "packages/dashboard",
+              "type": "directory"
+            }
+          ],
+          "opacity": 0.7,
+          "borderWidth": 2
+        }
+      ],
+      "colorMode": "fileTypes"
+    },
+    {
+      "id": "step-3-core-logic",
+      "title": "Core Logic & Configuration",
+      "description": "The core package handles configuration parsing and utilities. The main workspace configuration manages the entire monorepo.",
+      "estimatedTime": 90,
+      "highlightLayers": [
+        {
+          "id": "core-config",
+          "name": "Core Configuration",
+          "color": "#f59e0b",
+          "items": [
+            {
+              "path": "packages/core",
+              "type": "directory"
+            },
+            {
+              "path": "package.json",
+              "type": "file"
+            },
+            {
+              "path": "turbo.json",
+              "type": "file"
+            },
+            {
+              "path": "tsconfig.base.json",
+              "type": "file"
+            }
+          ],
+          "opacity": 0.7,
+          "borderWidth": 2
+        }
+      ],
+      "colorMode": "fileTypes",
+      "interactiveActions": [
+        {
+          "type": "click-file",
+          "description": "View the main package.json to understand the build scripts",
+          "target": "package.json"
+        }
+      ]
+    },
+    {
+      "id": "step-4-cli-entry",
+      "title": "CLI Entry Point",
+      "description": "The CLI package is the main entry point that developers interact with. It orchestrates the entire Localflare experience.",
+      "estimatedTime": 90,
+      "focusDirectory": "packages/cli",
+      "highlightLayers": [
+        {
+          "id": "cli-files",
+          "name": "CLI Components",
+          "color": "#8b5cf6",
+          "items": [
+            {
+              "path": "packages/cli/src",
+              "type": "directory"
+            },
+            {
+              "path": "packages/cli/package.json",
+              "type": "file"
+            }
+          ],
+          "opacity": 0.7,
+          "borderWidth": 2
+        }
+      ],
+      "colorMode": "fileTypes"
+    },
+    {
+      "id": "step-5-dashboard-ui",
+      "title": "Dashboard UI",
+      "description": "The React dashboard provides the user interface for interacting with your local Cloudflare bindings. This is hosted at studio.localflare.dev.",
+      "estimatedTime": 90,
+      "focusDirectory": "packages/dashboard",
+      "highlightLayers": [
+        {
+          "id": "dashboard-ui",
+          "name": "Dashboard Interface",
+          "color": "#10b981",
+          "items": [
+            {
+              "path": "packages/dashboard/src",
+              "type": "directory"
+            },
+            {
+              "path": "packages/dashboard/package.json",
+              "type": "file"
+            }
+          ],
+          "opacity": 0.7,
+          "borderWidth": 2
+        }
+      ],
+      "colorMode": "fileTypes"
+    },
+    {
+      "id": "step-6-development",
+      "title": "Development Setup",
+      "description": "The demo-app and www directories show how Localflare works with actual Worker projects. Use these for testing and development.",
+      "estimatedTime": 120,
+      "highlightLayers": [
+        {
+          "id": "dev-directories",
+          "name": "Development Areas",
+          "color": "#ef4444",
+          "items": [
+            {
+              "path": "demo-app",
+              "type": "directory"
+            },
+            {
+              "path": "www",
+              "type": "directory"
+            },
+            {
+              "path": "CONTRIBUTING.md",
+              "type": "file"
+            }
+          ],
+          "opacity": 0.7,
+          "borderWidth": 2
+        }
+      ],
+      "colorMode": "fileTypes",
+      "interactiveActions": [
+        {
+          "type": "click-file",
+          "description": "Read the contributing guidelines",
+          "target": "CONTRIBUTING.md"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "author": "Localflare Team",
+    "createdAt": "2026-02-04T16:08:49.293Z",
+    "tags": [
+      "onboarding",
+      "localflare",
+      "cloudflare",
+      "monorepo"
+    ]
+  }
+}
