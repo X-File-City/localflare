@@ -198,6 +198,20 @@
           "target": "CONTRIBUTING.md"
         }
       ]
+    },
+    {
+      "id": "step-7-closing",
+      "title": "Tour Complete!",
+      "description": "Congratulations! You've completed the Localflare onboarding tour. You now understand the monorepo structure and are ready to start contributing. The tour will now unfocus to show you the complete project overview.",
+      "estimatedTime": 30,
+      "colorMode": "fileTypes",
+      "interactiveActions": [
+        {
+          "type": "explore",
+          "description": "Start exploring the codebase",
+          "target": "."
+        }
+      ]
     }
   ],
   "metadata": {
